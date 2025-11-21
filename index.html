@@ -4,7 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>The Flame Grill</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tailwind Config - Defined before loading the script -->
     <script>
       tailwind.config = {
         theme: {
@@ -24,6 +25,7 @@
             animation: {
               'sizzle': 'sizzle 3s infinite ease-in-out',
               'float': 'float 6s ease-in-out infinite',
+              'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
             },
             keyframes: {
               sizzle: {
@@ -33,12 +35,18 @@
               float: {
                 '0%, 100%': { transform: 'translateY(0)' },
                 '50%': { transform: 'translateY(-10px)' },
+              },
+              fadeInUp: {
+                '0%': { opacity: '0', transform: 'translateY(20px)' },
+                '100%': { opacity: '1', transform: 'translateY(0)' },
               }
             }
           },
         },
       }
     </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Montserrat:wght@700;900&display=swap" rel="stylesheet">
     <style>
       /* Smooth scrolling for the whole page */
@@ -62,6 +70,14 @@
       
       .clip-dripping {
         clip-path: polygon(0% 0%, 100% 0%, 100% 80%, 90% 100%, 80% 85%, 70% 95%, 60% 85%, 50% 100%, 40% 85%, 30% 95%, 20% 85%, 10% 100%, 0% 80%);
+      }
+
+      /* 3D Transforms for Burger Animation */
+      .perspective-1000 {
+        perspective: 1000px;
+      }
+      .transform-style-3d {
+        transform-style: preserve-3d;
       }
     </style>
   <script type="importmap">

@@ -1,8 +1,28 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 const LocationSection: React.FC = () => {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.2 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section className="relative min-h-screen w-full flex items-center justify-center overflow-hidden">
+    <section ref={sectionRef} className="relative min-h-screen w-full flex items-center justify-center overflow-hidden">
       
       {/* Parallax Background */}
       <div 
@@ -16,12 +36,14 @@ const LocationSection: React.FC = () => {
       <div className="relative z-10 container mx-auto px-6 text-center py-20">
         
         {/* Headline */}
-        <h2 className="font-heading font-black text-5xl md:text-8xl text-white mb-12 drop-shadow-2xl tracking-tighter animate-fade-in-up">
-          FIND YOUR <span className="text-accent-flame">FLAME</span>
-        </h2>
+        <div className={`transition-all duration-1000 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}>
+            <h2 className="font-heading font-black text-5xl md:text-8xl text-white mb-12 drop-shadow-2xl tracking-tighter">
+            FIND YOUR <span className="text-accent-flame">FLAME</span>
+            </h2>
+        </div>
 
         {/* Content Container */}
-        <div className="bg-white/10 backdrop-blur-lg p-8 rounded-3xl border border-white/20 shadow-2xl max-w-4xl mx-auto">
+        <div className={`bg-white/10 backdrop-blur-lg p-8 rounded-3xl border border-white/20 shadow-2xl max-w-4xl mx-auto transition-all duration-1000 delay-300 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}>
             
             {/* Map Placeholder */}
             <div className="w-full h-64 md:h-96 bg-gray-800 rounded-2xl overflow-hidden relative group mb-10">
